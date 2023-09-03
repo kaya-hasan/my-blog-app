@@ -2,9 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { API_KEY } from "../services/api";
+//components
+import SingleNew from "./SingleNew";
 
 const NewsList = () => {
-  const [journal, setJournal] = useState([]);
+  const [journals, setJournal] = useState([]);
   const axiosNews = async () => {
     try {
       const response = await axios.get(`${API_KEY}`);
@@ -18,38 +20,16 @@ const NewsList = () => {
   }, []);
   return (
     <>
-      <section>
-        <h2>news lists</h2>
-      </section>
-      <ul className="users">
-        {journal.map((newJournal) => {
-          const {
-            id,
-            author,
-            title,
-            description,
-            url,
-            urlToImage,
-            publishedAt,
-            content,
-          } = newJournal;
-          return (
-            <li key={id}>
-              <img src={urlToImage} alt={author} />
-              <div>
-                <h2>{author}</h2>
-                <p className="description">Description: {description}</p>
-                <span>Published At: {publishedAt}</span>
-                {/* <br></br> */}
-                <p className="content">{content}</p>
-                <a href={url} target="_blank">
-                  Source:
-                </a>
-              </div>
+      <div className="news-list">
+        <ul>
+          {journals.map((journal, idx) => (
+            <li>
+              {" "}
+              <SingleNew journal={journal} key={idx} />{" "}
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
